@@ -21,7 +21,7 @@ loadSprite("wall", "wood2.png");
 loadSprite("silver", "metal1.png");
 loadSprite("cloud1", "cloud1.png");
 const bgMusic = new Audio("/assets/bgmusic.mp3", {
-	volume: 0.8,
+	volume: 0.4,
 	// loop: true,
 });
 const droplet = new Audio("/assets/droplet.wav", {
@@ -114,8 +114,6 @@ onKeyDown("v", () => {
 onKeyDown("right", () => {
 	console.log(player);
 	move((player.pos.x += SPEED));
-	bgMusic.play();
-
 	cleanup();
 });
 onKeyDown("left", () => {
