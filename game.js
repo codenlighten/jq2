@@ -1,6 +1,7 @@
 let height = window.innerHeight * 3;
 let width = window.innerWidth;
-let SPEED = 15;
+let SPEED = 900;
+
 let JUMP_POWER = 800;
 let CLOUD_SPEED = 200;
 let SILVER_SPEED = 100;
@@ -58,6 +59,7 @@ player.onUpdate(() => {
 	// 	camPos(player.pos.y, currCam.y);
 	// 	camPos(player.pos.x, currCam.x);
 	// }
+	console.log(dt());
 	onCollide("player", "wall", () => {
 		player.pos.x += 1;
 		// burp();
@@ -113,12 +115,12 @@ onKeyDown("v", () => {
 
 onKeyDown("right", () => {
 	console.log(player);
-	move((player.pos.x += SPEED));
+	move((player.pos.x += SPEED * dt()));
 	cleanup();
 });
 onKeyDown("left", () => {
 	console.log(player);
-	move((player.pos.x -= SPEED));
+	move((player.pos.x -= SPEED * dt()));
 	cleanup();
 });
 let clouds = [];
@@ -149,6 +151,7 @@ function spawnCloud() {
 
 loop(0.8, spawnCloud);
 
+console.log(dt());
 let silvers = [];
 
 function spawnSilver() {
@@ -163,9 +166,9 @@ function spawnSilver() {
 		area(),
 		{
 			xpos: rand((-1 * width) / 2, width * 3),
-			ypos: rand((-1 * height) / 2, height * 3),
+			ypos: rand((-1 * height) / 2, height * 10),
 			zpos: 1000,
-			speed: SILVER_SPEED + rand(SILVER_SPEED * 2, SILVER_SPEED * 3),
+			speed: SILVER_SPEED + rand(SILVER_SPEED * 2, SILVER_SPEED * 10),
 		},
 
 		"cloud",
