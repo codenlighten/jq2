@@ -135,7 +135,7 @@ function spawnCloud() {
 		rotate(0),
 		{
 			xpos: rand((-1 * width) / 2, width / 2),
-			ypos: rand((-1 * height) / 2, height / 2),
+			ypos: rand((-1 * height) / 2, height),
 			zpos: 1000,
 			speed: CLOUD_SPEED + rand(-0.5 * CLOUD_SPEED, 0.5 * CLOUD_SPEED),
 		},
