@@ -15,7 +15,7 @@ kaboom({
 });
 // console.log(window.innerHeight);
 loadRoot("./assets/");
-loadSprite("player", "traveler.png");
+loadSprite("player", "ogre.png");
 loadSprite("floor", "wood1.png");
 loadSprite("wall", "wood2.png");
 loadSprite("silver", "metal1.png");
@@ -34,7 +34,7 @@ const whoosh = new Audio("/assets/whoosh.flac", {
 });
 const player = add([
 	sprite("player"),
-	scale(0.25),
+	scale(0.2, 0.2),
 	body(),
 	solid(),
 	area(),
@@ -99,15 +99,15 @@ onKeyDown("v", () => {
 	if (player.isGrounded()) {
 		player.jump(DOUBLE_JUMP);
 		whoosh.play();
-		add([
-			text(`X:${player.pos.x}, Y:${player.pos.y}`, {
-				size: 21, // 48 pixels tall
-				width: 100, // it'll wrap to next line when width exceeds this value
-				// there're 4 built-in fonts: "apl386", "apl386o", "sink", and "sinko"
-			}),
-			pos(player.pos.x + 50, player.pos.y - 300),
-			{ value: 0 },
-		]);
+		// add([
+		// 	text(`X:${player.pos.x}, Y:${player.pos.y}`, {
+		// 		size: 21, // 48 pixels tall
+		// 		width: 100, // it'll wrap to next line when width exceeds this value
+		// 		// there're 4 built-in fonts: "apl386", "apl386o", "sink", and "sinko"
+		// 	}),
+		// 	pos(player.pos.x + 50, player.pos.y - 300),
+		// 	{ value: 0 },
+		// ]);
 	}
 });
 
@@ -159,15 +159,15 @@ function spawnSilver() {
 
 	var newSilver = add([
 		sprite("silver"),
-		scale(0.1, 0.5),
+		scale(0.05, 0.5),
 		pos(x, y),
 		solid(),
 		area(),
 		{
-			xpos: rand((-1 * width) / 2, width / 2),
+			xpos: rand((-1 * width) / 2, width * 3),
 			ypos: rand((-1 * height) / 2, height * 3),
 			zpos: 1000,
-			speed: SILVER_SPEED + rand(-0.5 * SILVER_SPEED, SILVER_SPEED * 3),
+			speed: SILVER_SPEED + rand(SILVER_SPEED * 2, SILVER_SPEED * 3),
 		},
 
 		"cloud",
