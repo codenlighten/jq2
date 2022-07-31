@@ -18,10 +18,20 @@ loadRoot("./assets/");
 loadSprite("player", "traveler.png");
 loadSprite("floor", "wood1.png");
 loadSprite("wall", "wood2.png");
-
 loadSprite("silver", "metal1.png");
 loadSprite("cloud1", "cloud1.png");
-
+const bgMusic = new Audio("/assets/bgmusic.mp3", {
+	volume: 0.8,
+	// loop: true,
+});
+const droplet = new Audio("/assets/droplet.wav", {
+	volume: 0.8,
+	// loop: true,
+});
+const whoosh = new Audio("/assets/whoosh.flac", {
+	volume: 0.8,
+	// loop: true,
+});
 const player = add([
 	sprite("player"),
 	scale(0.25),
@@ -74,21 +84,38 @@ const wall = add([
 // add([sprite("silver"), scale(0.5), pos(600, height - 400), solid(), area()]);
 // add([sprite("silver"), scale(0.5), pos(900, height - 900), solid(), area()]);
 
+onKeyPress("enter", () => {
+	bgMusic.play();
+});
+
 onKeyPress("space", () => {
 	if (player.isGrounded()) {
 		player.jump(JUMP_POWER);
+		burp();
 	}
 });
 console.log(player);
 onKeyDown("v", () => {
 	if (player.isGrounded()) {
 		player.jump(DOUBLE_JUMP);
+		whoosh.play();
+		add([
+			text(`X:${player.pos.x}, Y:${player.pos.y}`, {
+				size: 28, // 48 pixels tall
+				width: 100, // it'll wrap to next line when width exceeds this value
+				// there're 4 built-in fonts: "apl386", "apl386o", "sink", and "sinko"
+			}),
+			pos(player.pos.x + 50, player.pos.y - 300),
+			{ value: 0 },
+		]);
 	}
 });
 
 onKeyDown("right", () => {
 	console.log(player);
 	move((player.pos.x += SPEED));
+	bgMusic.play();
+
 	cleanup();
 });
 onKeyDown("left", () => {
@@ -100,7 +127,7 @@ let clouds = [];
 
 function spawnCloud() {
 	const x = rand(0, width);
-	const y = rand(0, height);
+	const y = rand(0, height * 2);
 
 	var newCloud = add([
 		sprite("cloud1"),
@@ -132,15 +159,15 @@ function spawnSilver() {
 
 	var newSilver = add([
 		sprite("silver"),
-		scale(0.5),
+		scale(0.15, 0.5),
 		pos(x, y),
 		solid(),
 		area(),
 		{
 			xpos: rand((-1 * width) / 2, width / 2),
-			ypos: rand((-1 * height) / 2, height / 2),
+			ypos: rand((-1 * height) / 2, height),
 			zpos: 1000,
-			speed: SILVER_SPEED + rand(-0.5 * SILVER_SPEED, 0.5 * SILVER_SPEED),
+			speed: SILVER_SPEED + rand(-0.5 * SILVER_SPEED, SILVER_SPEED),
 		},
 
 		"cloud",
